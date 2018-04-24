@@ -10,7 +10,7 @@ export function createMario() {
 		const mario = new Entity();
 		mario.size.set(14, 48);
 		
-		mario.addTrait(new Go());
+		// mario.addTrait(new Go());
 		mario.addTrait(new Jump());
 		mario.addTrait(new Velocity());
 
