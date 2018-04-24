@@ -57,6 +57,13 @@ export function createCollisionLayer(level) {
 			context.stroke();
 		});
 
+		context.strokeStyle = 'red';
+		level.entities.forEach(entity => {
+			context.beginPath();
+			context.rect(entity.pos.x, entity.pos.y, entity.size.x, entity.size.y);
+			context.stroke();
+		})
+
 		resolvedTiles.length = 0;
 	}
 }

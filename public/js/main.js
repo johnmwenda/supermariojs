@@ -54,7 +54,7 @@ Promise.all([
 	const timer = new Timer(1/60);
 	timer.update = function update(delaTime) {
 		level.update(delaTime); //update all the entities
-		level.comp.draw(context);			
+		level.comp.draw(context);	//draw everything at its current position		
 		mario.vel.y += gravity * delaTime;
 	}
 
