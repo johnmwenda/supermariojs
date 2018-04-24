@@ -50,17 +50,13 @@ export function createCollisionLayer(level) {
 	}
 
 	return function drawCollision(context) {
-		// context.strokeStyle = 'blue';
-		// resolvedTiles.forEach(({x, y})=>{
-		// 	context.beginPath();
-		// 	context.rect(x * tileSize, y*tileSize, tileSize, tileSize);
-		// 	context.stroke();
-		// });
+		context.strokeStyle = 'blue';
+		resolvedTiles.forEach(({x, y})=>{
+			context.beginPath();
+			context.rect(x * tileSize, y*tileSize, tileSize, tileSize);
+			context.stroke();
+		});
 
-		// resolvedTiles.length = 0;
-
-		resolvedTiles.forEach(({x, y})=> {
-			console.log('Would draw', x, y);
-		})
+		resolvedTiles.length = 0;
 	}
 }

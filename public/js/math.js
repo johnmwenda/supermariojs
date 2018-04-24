@@ -3,6 +3,7 @@ export class Matrix {
 		this.grid = [];
 	}
 
+	// makes it more robust, coz now we are saying the Matrix class has a method that can loop over the matrix, get the value, x, y and pass them to a callback, the advantage here is that the callback can now do anything with the passed values
 	forEach(callback) {
 		this.grid.forEach((column, x) => {
 			column.forEach((value, y)=> {
