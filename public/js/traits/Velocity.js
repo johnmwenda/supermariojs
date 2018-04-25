@@ -6,7 +6,6 @@ export default class Velocity extends Trait{
 	}
 
 	update(entity, deltaTime) {
-			entity.pos.x += entity.vel.x * deltaTime; //vel.x is constant
-			entity.pos.y += entity.vel.y * deltaTime; //vel.y changes with every call
+			
 	}
 }

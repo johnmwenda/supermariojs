@@ -5,12 +5,12 @@ export default class Go extends Trait{
 		super('go');
 
 		this.dir = 0;
-		this.speed = 200;
+		this.speed = 6000;
 		
 	}
 
 
 	update(entity, deltaTime) {
-		entity.vel.x = this.speed * this.direction * deltaTime;
+		entity.vel.x = this.speed * this.dir * deltaTime;
 	}
 }
