@@ -3,9 +3,9 @@ export default class Compositor {
 		this.layers = []; //contains array of closures/callback functions
 	}
 
-	draw(context) {
+	draw(context, camera) {
 		this.layers.forEach(layer => {
-			layer(context);
+			layer(context, camera);
 		})
 	}
 }
