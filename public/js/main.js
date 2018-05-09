@@ -6,7 +6,7 @@ import {loadLevel} from './loaders.js';
 import {createCollisionLayer, createCameraLayer} from './layers.js';
 
 import {setupKeyboard} from './input.js';
-import {setupMouseControl} from './debug.js';
+// import {setupMouseControl} from './debug.js';
 
 
 const canvas = document.getElementById("screen");
@@ -31,7 +31,7 @@ Promise.all([
 	mario.pos.set(64, 64);
 
 	level.comp.layers.push(
-		createCollisionLayer(level),
+		// createCollisionLayer(level),
 		createCameraLayer(camera)
 		);
 	
@@ -41,12 +41,15 @@ Promise.all([
 
 	input.listenTo(window);
 
-	setupMouseControl(canvas, mario, camera);
+	// setupMouseControl(canvas, mario, camera);
 
 
 	const timer = new Timer(1/60);
 	timer.update = function update(delaTime) {
 		level.update(delaTime); //update all the entities
+		if(mario.pos.x > 100) {
+			camera.pos.x = mario.pos.x - 100;
+		}
 		level.comp.draw(context, camera);	//draw everything at its current position
 	}
 

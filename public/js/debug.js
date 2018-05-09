@@ -8,7 +8,7 @@ export function setupMouseControl(canvas, entity, camera) {
 				entity.pos.set(event.offsetX + camera.pos.x, event.offsetY+camera.pos.y);
 			}else if(event.buttons == 2 && lastEvent && lastEvent.buttons==2 && lastEvent.type== 'mousemove'
 				){
-				console.log('clicked', camera.pos.x, event.offsetX, lastEvent.offsetX);
+				// console.log('clicked', camera.pos.x, event.offsetX, lastEvent.offsetX);
 				camera.pos.x -= event.offsetX - lastEvent.offsetX;
 				// console.log(camera.pos.x);
 			}

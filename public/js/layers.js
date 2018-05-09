@@ -17,17 +17,26 @@ export function createBackgroundLayer(level, sprites) {
 	const resolver = level.tileCollider.tiles;
 
 	const buffer = document.createElement("canvas");
-	buffer.width = 256 + 16;
+	buffer.width = 2048;
 	buffer.height = 240;
 
 	const context = buffer.getContext("2d");
 
-	function redraw(startIndex, endIndex) {
+	let startIndex, endIndex;
+	function redraw(drawFrom, drawTo) {
+		startIndex = drawFrom;
+		endIndex = drawTo;
+
 		for(let x=startIndex; x<=endIndex; ++x) {
 			const col = tiles.grid[x];
 			if(col) {
 				col.forEach((tile, y)=> {
-					sprites.drawTile(tile.name, context, x, y);
+					if(sprites.animations.has(tile.name)) {
+						sprites.drawAnim(tile.name, context, x-startIndex, y, level.totalTime)
+					}else {
+						sprites.drawTile(tile.name, context, x-startIndex, y);	
+					}
+					
 				})
 			}
 		}
@@ -39,7 +48,7 @@ export function createBackgroundLayer(level, sprites) {
 		const drawTo = drawFrom + drawWidth;
 		redraw(drawFrom, drawTo);
 		// console.log(level.tiles);
-		context.drawImage(buffer, -camera.pos.x, -camera.pos.y);
+		context.drawImage(buffer, -camera.pos.x % 16, -camera.pos.y);
 	}
 }
 
