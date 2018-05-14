@@ -1,5 +1,9 @@
 import {Vec2} from './math.js';
 
+export const Sides = {
+	TOP: Symbol('top'),
+	BOTTOM: Symbol('bottom')
+};
 
 //super class
 export class Trait {
@@ -10,6 +14,10 @@ export class Trait {
 	upate() {		
 		console.warn('Unhandled update call in Trait');
 	}	
+
+	obstruct() {
+
+	}
 }
 
 export default class Entity {
@@ -29,6 +37,12 @@ export default class Entity {
 	update(deltaTime) {
 		this.traits.forEach(trait => {
 			trait.update(this, deltaTime);
+		})
+	}
+
+	obstruct(side) {
+		this.traits.forEach(trait => {
+			trait.obstruct(this, side);
 		})
 	}
 }
