@@ -1,20 +1,9 @@
-// function drawBackground(background, context, sprites) {
-// 	let x1 = background.ranges[0];
-// 	let x2 = background.ranges[1];
-// 	let y1 = background.ranges[2];
-// 	let y2 = background.ranges[3];
-	
-// 	for(let x=x1; x < x2; ++x) {	
-// 		for(let y=y1; y<y2; ++y) {
-// 			sprites.drawTile(background.tile,context, x, y);
-// 		}
-// 	}
-// }
+import TileResolver from './TileResolver.js';
 
 //the higher order function that will return another function
-export function createBackgroundLayer(level, sprites) {
-	const tiles = level.tiles;
-	const resolver = level.tileCollider.tiles;
+export function createBackgroundLayer(level, tiles,  sprites) {
+	// console.log(tiles);
+	const resolver = new TileResolver(tiles);
 
 	const buffer = document.createElement("canvas");
 	buffer.width = 2048;
@@ -22,10 +11,8 @@ export function createBackgroundLayer(level, sprites) {
 
 	const context = buffer.getContext("2d");
 
-	let startIndex, endIndex;
-	function redraw(drawFrom, drawTo) {
-		startIndex = drawFrom;
-		endIndex = drawTo;
+	function redraw(startIndex, endIndex) {
+		context.clearRect(0,0, buffer.width, buffer.height);
 
 		for(let x=startIndex; x<=endIndex; ++x) {
 			const col = tiles.grid[x];
@@ -54,6 +41,7 @@ export function createBackgroundLayer(level, sprites) {
 
 
 export function createSpriteLayer(entities, width=64, height=64) {
+	console.log(entities);
 	const spriteBuffer = document.createElement('canvas');
 	spriteBuffer.width = width;
 	spriteBuffer.height = height;
@@ -98,7 +86,11 @@ export function createCollisionLayer(level) {
 		context.strokeStyle = 'red';
 		level.entities.forEach(entity => {
 			context.beginPath();
-			context.rect(entity.pos.x - camera.pos.x, entity.pos.y - camera.pos.y, entity.size.x, entity.size.y);
+			context.rect(
+				entity.pos.x - camera.pos.x, 
+				entity.pos.y - camera.pos.y + entity.offset.y, 
+				entity.size.x, 
+				entity.size.y);
 			context.stroke();
 		})
 
@@ -108,7 +100,7 @@ export function createCollisionLayer(level) {
 
 
 export function createCameraLayer(cameraToDraw) {
-	console.log('called');
+	// console.log('called');
 	return function drawCameraRect(context, fromCamera) {
 		// console.log(fromCamera, cameraToDraw);
 		context.strokeStyle ='purple';

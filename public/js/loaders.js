@@ -1,5 +1,3 @@
-import Level from './Level.js';
-import {createBackgroundLayer, createSpriteLayer} from './layers.js';
 import SpriteSheet from './SpriteSheet.js';
 import {createAnim} from './anim.js';
 
@@ -13,42 +11,9 @@ export function loadImage(url) {
 	});
 }
 
-function loadJSON(url) {
+export function loadJSON(url) {
 	return fetch(url)
 	.then(r => r.json());
-}
-
-export function createTiles(level, backgrounds) {
-
-	function applyRange(background, xStart, xLen, yStart, yLen) {
-		const xEnd = xStart + xLen;
-		const yEnd = yStart + yLen;
-		for(let x=xStart; x < xEnd; ++x) {	
-			for(let y=yStart; y<yEnd; ++y) {
-				// sprites.drawTile(background.tile,context, x, y);
-				level.tiles.set(x, y, {
-					name: background.tile,
-					type: background.type
-				});
-			}
-		}
-	}
-
-	backgrounds.forEach(background => {
-		background.ranges.forEach(range => {
-			if(range.length == 4 ) {
-				const [xStart, xLen, yStart, yLen] = range;
-				applyRange(background, xStart, xLen, yStart, yLen);
-			}else if(range.length == 3) {
-				const [xStart, xLen, yStart] = range;
-				applyRange(background, xStart, xLen, yStart, 1);
-			}
-			else if(range.length == 2) {
-				const [xStart, yStart] = range;
-				applyRange(background, xStart, 1, yStart, 1);
-			}
-		});
-	});	
 }
 
 // flexible, re-usable
@@ -85,32 +50,5 @@ export function loadSpriteSheet(name) {
 			}
 
 			return sprites;
-		});
-}	
-
-export function loadLevel(name) {
-
-	return loadJSON(`/levels/${name}.json`)
-		.then(levelSpec => Promise.all([
-			levelSpec,
-			loadSpriteSheet(levelSpec.spriteSheet)
-		]))
-		.then(([levelSpec, backgroundSprites]) => {
-			const level = new Level();
-
-			//set the matrix indexes and tile names
-			createTiles(level, levelSpec.backgrounds);
-
-			//define a callback which will be added to the layers array which will draw the background
-			const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
-			level.comp.layers.push(backgroundLayer);
-
-			//define a callback which will be added to the layers array which will draw the sprites(mario for now)
-			const spriteLayer = createSpriteLayer(level.entities);
-			level.comp.layers.push(spriteLayer);
-			
-			window.level = level;
-
-			return level;
 		});
 }

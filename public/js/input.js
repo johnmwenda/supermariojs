@@ -11,6 +11,11 @@ export function setupKeyboard(entity) {
 		}
 	});
 
+	input.addMapping('KeyO', keystate => {
+		entity.turbo(keystate);
+	});
+
+
 	input.addMapping('KeyD', keystate => {
 		entity.go.dir += keystate ? 1:-1;
 	});
